@@ -50,8 +50,7 @@ dependencies:
   flutter_chat_ui: ^1.6.1
   flutter_settings_ui: ^2.0.1
   fluttermoji: ^1.0.0
-  cardano_wallet_sdk: ^0.1.0-alpha.12
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

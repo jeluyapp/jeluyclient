@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import '../navbar_bloc.dart';
 import '../navbar_data.dart';
@@ -14,29 +13,33 @@ class NavbarView extends StatelessWidget {
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
         child: BlocBuilder<HomePageBloc, NavbarStore>(
           builder: (context, state) {
-            return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  NavbarElement(
-                      "Home", const Icon(Icons.home, color: Colors.white), () {
-                    context.read<HomePageBloc>().add(NavbarHomePressed());
-                  }, state.home, Colors.white),
-                  NavbarElement(
-                      "Search", const Icon(Icons.search, color: Colors.white),
-                      () {
-                    context.read<HomePageBloc>().add(NavbarSearchPressed());
-                  }, state.search, Colors.white),
-                  NavbarElement(
-                      "Chats", const Icon(Icons.message, color: Colors.white),
-                      () {
-                    context.read<HomePageBloc>().add(NavbarChatsPressed());
-                  }, state.chats, Colors.white),
-                  NavbarElement(
-                      "Profile", const Icon(Icons.person, color: Colors.white),
-                      () {
-                    context.read<HomePageBloc>().add(NavbarProfilePressed());
-                  }, state.profile, Colors.white)
-                ].map((item) => Expanded(child: item)).toList());
+            if (!(state.substate == NavbarStates.chats)) {
+              return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    NavbarElement(
+                        "Home", const Icon(Icons.home, color: Colors.white), () {
+                      context.read<HomePageBloc>().add(NavbarHomePressed());
+                    }, state.substate == NavbarStates.home, Colors.white),
+                    NavbarElement(
+                        "Search", const Icon(Icons.search, color: Colors.white),
+                        () {
+                      context.read<HomePageBloc>().add(NavbarSearchPressed());
+                    }, state.substate == NavbarStates.search, Colors.white),
+                    NavbarElement(
+                        "Chats", const Icon(Icons.message, color: Colors.white),
+                        () {
+                      context.read<HomePageBloc>().add(NavbarChatsPressed());
+                    }, state.substate == NavbarStates.chats, Colors.white),
+                    NavbarElement(
+                        "Profile", const Icon(Icons.person, color: Colors.white),
+                        () {
+                      context.read<HomePageBloc>().add(NavbarProfilePressed());
+                    }, state.substate == NavbarStates.profile, Colors.white)
+                  ].map((item) => Expanded(child: item)).toList());
+            } else {
+              return Row();
+            }
           },
         ));
   }

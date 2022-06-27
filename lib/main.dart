@@ -10,8 +10,6 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
-// import 'package:cardano_wallet_sdk/cardano_wallet_sdk.dart';
-
 import 'navbar/navbar_ui/navbar_page.dart';
 
 void main() async {
@@ -52,11 +50,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          // leading: IconButton(icon: const Icon(Icons.arrow_back),
+          //   onPressed:() => Navigator.pop(context, true),
+          // ),
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: const Text("Jeluy"),
         ),
-        // body: ,
         bottomNavigationBar: NavbarPage());
   }
 }

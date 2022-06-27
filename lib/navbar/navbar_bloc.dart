@@ -8,26 +8,51 @@ class HomePageBloc extends HydratedBloc<NavbarEvent, NavbarStore> {
     super.onChange(change);
   }
 
-  HomePageBloc() : super(NavbarStore(true, false, false, false)) {
+  HomePageBloc() : super(NavbarStore(substate: NavbarStates.home)) {
     on<NavbarHomePressed>(
-        (event, emit) => emit(NavbarStore(true, false, false, false)));
+        (event, emit) => emit(NavbarStore(substate: NavbarStates.home)));
     on<NavbarSearchPressed>(
-        (event, emit) => emit(NavbarStore(false, true, false, false)));
+        (event, emit) => emit(NavbarStore(substate: NavbarStates.search)));
     on<NavbarChatsPressed>(
-        (event, emit) => emit(NavbarStore(false, false, true, false)));
+        (event, emit) => emit(NavbarStore(substate: NavbarStates.chats)));
     on<NavbarProfilePressed>(
-        (event, emit) => emit(NavbarStore(false, false, false, true)));
+        (event, emit) => emit(NavbarStore(substate: NavbarStates.profile)));
+  }
+
+  String stateToString(NavbarStates state) {
+    if (state == NavbarStates.home) {
+      return "home";
+    } else if (state == NavbarStates.search) {
+      return "search";
+    } else if (state == NavbarStates.chats) {
+      return "chats";
+    } else if (state == NavbarStates.profile) {
+      return "profile";
+    } else {
+      throw Exception("Navbar State not Retrieved Successfully.");
+    }
+  }
+
+  NavbarStates stringToState(String state) {
+    if (state == "home") {
+      return NavbarStates.home;
+    } else if (state == "search") {
+      return NavbarStates.search;
+    } else if (state == "chats") {
+      return NavbarStates.chats;
+    } else if (state == "profile") {
+      return NavbarStates.profile;
+    } else {
+      throw Exception("Navbar State not Retrieved Successfully.");
+    }
   }
 
   @override
   NavbarStore fromJson(Map<String, dynamic> json) =>
-      NavbarStore(json['home'], json['search'], json['chats'], json['profile']);
+      NavbarStore(substate: stringToState(json['state']));
 
   @override
-  Map<String, bool> toJson(NavbarStore state) => {
-        "home": state.home,
-        "search": state.search,
-        "chats": state.chats,
-        "profile": state.profile
+  Map<String, String> toJson(NavbarStore state) => {
+        "state": stateToString(state.substate)
       };
 }

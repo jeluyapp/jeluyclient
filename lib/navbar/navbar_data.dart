@@ -8,17 +8,15 @@ class NavbarChatsPressed extends NavbarEvent {}
 
 class NavbarProfilePressed extends NavbarEvent {}
 
-class NavbarStore {
-  bool home = false;
-  bool search = false;
-  bool chats = false;
-  bool profile = false;
+enum NavbarStates {
+  home,
+  search,
+  chats,
+  profile
+}
 
-  NavbarStore(bool homeActive, bool searchActive, bool chatsActive,
-      bool profileActive) {
-    home = homeActive;
-    search = searchActive;
-    chats = chatsActive;
-    profile = profileActive;
-  }
+class NavbarStore {
+  NavbarStates substate;
+
+  NavbarStore({required this.substate});
 }
